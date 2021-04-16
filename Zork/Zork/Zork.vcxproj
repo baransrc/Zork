@@ -123,7 +123,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="creature.cpp" />
+    <ClCompile Include="entity.cpp" />
+    <ClCompile Include="exit.cpp" />
+    <ClCompile Include="item.cpp" />
+    <ClCompile Include="player.cpp" />
+    <ClCompile Include="room.cpp" />
+    <ClCompile Include="world.cpp" />
     <ClCompile Include="zork.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="creature.h" />
+    <ClInclude Include="entity.h" />
+    <ClInclude Include="exit.h" />
+    <ClInclude Include="item.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="room.h" />
+    <ClInclude Include="util.h" />
+    <ClInclude Include="world.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
