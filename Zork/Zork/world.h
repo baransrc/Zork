@@ -27,6 +27,9 @@ namespace Zork
 		clock_t updateTimer;
 		std::vector<Entity*> entities;
 		Player* player;
+
+		std::string DetermineCharacterName();
+		void Intro();
 	};
 }
 
