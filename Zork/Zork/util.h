@@ -7,16 +7,11 @@
 
 namespace Util
 {
-	std::vector<std::string> splitStringToWords(std::string input)
-	{	
-		std::vector<std::string> container;
-		std::istringstream inputStream(input);
-		
-		for (std::string str; inputStream >> str; )
-		{
-			container.push_back(str);
-		}
+	std::vector<std::string> splitStringToWords(std::string input);
 
-		return container;
-	}
+	bool Equals(const std::string cppString, const char* cString);
+
+	bool Equals(const std::string cppString1, std::string cppString2);
+
+	bool Equals(const char* cString1, const char* cString2);
 }

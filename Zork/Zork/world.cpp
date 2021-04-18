@@ -2,15 +2,40 @@
 
 Zork::World::World()
 {
+	updateTimer = clock();
+
 	Intro();
+
+	Entity* entity1 = new Entity("Name1", "Desc1", NULL);
+	Entity* entity2 = new Entity("Name2", "Desc2", entity1);
+	Entity* entity3 = new Entity("Name3", "Desc3", entity2);
+	Entity* entity4 = new Entity("Name4", "Desc4", entity1);
+	
+	entity1->LookInside();
+
+	std::cout << std::endl;
+	
+	entity2->LookInside();	
+
+	std::cout << std::endl;
+
+	std::cout << "Find all results:" << std::endl;
+	std::list<Entity*> children;
+
+	entity1->FindAllInChildren(Zork::EntityType::ENTITY, &children);
+
+	for (std::list<Entity*>::const_iterator iterator = children.begin(); iterator != children.cend(); ++iterator)
+	{
+		std::cout << "\t" << (*iterator)->name << std::endl;	
+	}
 }
 
 void Zork::World::Intro()
 {
 	std::cout << "You find yourself in a dark area beneath the surface of the ground, slowly regaining your consciousness." << std::endl;
-	std::cout << "You see a obelisk right before you, surrounded with a faded magic sircle." << std::endl;
+	std::cout << "You see an obelisk right before you, surrounded with a faded magic sircle." << std::endl;
 	std::cout << "On the obelisk, lies four cavities. A triangle, a cross, a square and a circle." << std::endl;
-	std::cout << "As you slowly regain your memories, you struggle to recall your name." << std::endl;
+	std::cout << "As you slowly regain your consciousness, you struggle to recall your name." << std::endl;
 
 	// Get character name as input from user until she/he decides:
 	std::string characterName = DetermineCharacterName();

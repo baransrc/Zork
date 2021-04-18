@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <time.h>
+#include "entity.h"
 
 class Entity;
 class Player;
@@ -24,12 +25,14 @@ namespace Zork
 
 	private:
 
+		std::string DetermineCharacterName();
+		void Intro();
+	
+	private:
 		clock_t updateTimer;
 		std::vector<Entity*> entities;
 		Player* player;
 
-		std::string DetermineCharacterName();
-		void Intro();
 	};
 }
 
