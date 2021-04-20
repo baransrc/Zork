@@ -2,10 +2,9 @@
 
 Zork::Entity::Entity(const char* newName, const char* newDescription, Entity* newParent)
 {
-    this->name = newName;
-    this->description = newDescription;
+    name = newName;
+    description = newDescription;
     SetParent(newParent);
-
 }
 
 void Zork::Entity::Look() const
@@ -36,7 +35,7 @@ void Zork::Entity::Update()
 {
 }
 
-Zork::EntityType Zork::Entity::GetType() const
+const Zork::EntityType Zork::Entity::GetType() const
 {
     return EntityType::ENTITY;
 }
@@ -45,7 +44,7 @@ void Zork::Entity::SetParent(Entity * newParent)
 {
     if (parent != NULL)
     {
-        parent->GetChildren()->remove(this);
+		parent->RemoveChild(this);
     }
 
     if (newParent != NULL)
@@ -56,14 +55,14 @@ void Zork::Entity::SetParent(Entity * newParent)
     parent = newParent;
 }
 
-Zork::Entity* Zork::Entity::GetParent()
+const Zork::Entity* Zork::Entity::GetParent() const
 {
 	return parent;
 }
 
-std::list<Zork::Entity*>* Zork::Entity::GetChildren()
+const std::list<Zork::Entity*>& Zork::Entity::GetChildren() const
 {
-	return &children;
+	return children;
 }
 
 void Zork::Entity::AddChild(Entity* child)
@@ -71,11 +70,30 @@ void Zork::Entity::AddChild(Entity* child)
     children.push_back(child);
 }
 
+void Zork::Entity::RemoveChild(Entity* child) 
+{
+	children.remove(child);
+}
+
+Zork::Entity* Zork::Entity::FindInChildren(const std::string childName) const
+{
+	for (std::list<Entity*>::const_iterator iterator = children.begin(); iterator != children.cend(); ++iterator)
+    {
+        if (Util::Equals((*iterator)->name, childName))
+        {
+            return (*iterator);
+        }
+    } 
+
+    // If such child could not be found return null:
+    return NULL;   
+}
+
 Zork::Entity* Zork::Entity::FindInChildren(const std::string childName, EntityType childType) const
 {
 	for (std::list<Entity*>::const_iterator iterator = children.begin(); iterator != children.cend(); ++iterator)
     {
-        if (Util::Equals((*iterator)->name, childName) && (*iterator)->type == childType)
+        if (Util::Equals((*iterator)->name, childName) && (*iterator)->GetType() == childType)
         {
             return (*iterator);
         }
@@ -89,7 +107,7 @@ Zork::Entity* Zork::Entity::FindInChildren(EntityType childType) const
 {
 	for (std::list<Entity*>::const_iterator iterator = children.begin(); iterator != children.cend(); ++iterator)
     {
-        if ((*iterator)->type == childType)
+        if ((*iterator)->GetType() == childType)
         {
             return (*iterator);
         }
@@ -117,11 +135,18 @@ void Zork::Entity::FindAllInChildren(EntityType childType, std::list<Entity*>* r
 {
     for (std::list<Entity*>::const_iterator iterator = children.begin(); iterator != children.cend(); ++iterator)
     {
-        if ((*iterator)->type == childType)
+        if ((*iterator)->GetType() == childType)
         {
             returnedList->push_back(*iterator);
         }
     } 
+}
+
+const bool Zork::Entity::IsCreature() const
+{
+    return (GetType() == EntityType::CREATURE || 
+            GetType() == EntityType::PLAYER || 
+            GetType() == EntityType::NPC);
 }
 
 Zork::Entity::~Entity()

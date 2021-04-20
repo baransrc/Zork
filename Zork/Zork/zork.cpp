@@ -5,8 +5,6 @@
 
 int main()
 {
-	std::cout << "This project will become a Zork inspired game in the future commits!" << std::endl;
-
 	// Initialize World:
 	Zork::World* world = new Zork::World();
 
@@ -17,16 +15,9 @@ int main()
 
 		getline(std::cin, userInput);
 		
-		std::vector<std::string> tokens = Util::splitStringToWords(userInput);
+		std::vector<std::string> tokens = Util::SplitStringToWords(userInput);
 
-		std::cout << "User Input Is:" << std::endl;
-
-		for (auto& token : tokens)
-		{
-			std::cout << token << std::endl;
-		}
-
-		std::cout << "------" << std::endl;
+		world->Update(tokens);
 
 		tokens.clear();
 	}

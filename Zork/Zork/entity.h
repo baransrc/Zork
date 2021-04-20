@@ -5,19 +5,10 @@
 #include <list>
 #include <vector>
 #include "util.h"
+#include "entity_type.h"
 
 namespace Zork
 {
-	enum EntityType
-	{
-		ENTITY,
-		ROOM,
-		EXIT,
-		ITEM,
-		CREATURE,
-		PLAYER
-	};
-
 	class Entity
 	{
 	public:
@@ -26,22 +17,24 @@ namespace Zork
 		virtual void Look() const;
 		virtual void LookInside() const;
 		virtual void Update();
-		virtual EntityType GetType() const;
+		const virtual EntityType GetType() const;
 
-		void SetParent(Entity* newParent);
-		Entity* GetParent();
-
-		std::list<Entity*>* GetChildren();
+		virtual void SetParent(Entity* newParent);
 		void AddChild(Entity* child);
+		void RemoveChild(Entity* child);
+		const Entity* GetParent() const;
+		const std::list<Entity*>& GetChildren() const;
 
+		Entity* FindInChildren(const std::string childName) const;
 		Entity* FindInChildren(const std::string childName, EntityType childType) const;
 		Entity* FindInChildren(EntityType childType) const;
 		Entity* FindInChildren(Entity* child) const;
 		void FindAllInChildren(EntityType childType, std::list<Entity*>* returnedList) const;
+
+		const bool IsCreature() const; 
 		
 		virtual ~Entity();
 	public:
-		EntityType type;
 		std::string name;
 		std::string description;
 	private:

@@ -135,9 +135,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="creature.h" />
+    <ClInclude Include="direction.h" />
     <ClInclude Include="entity.h" />
+    <ClInclude Include="entity_type.h" />
     <ClInclude Include="exit.h" />
     <ClInclude Include="item.h" />
+    <ClInclude Include="nature_type.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="room.h" />
     <ClInclude Include="util.h" />

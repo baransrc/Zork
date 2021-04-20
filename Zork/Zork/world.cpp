@@ -1,4 +1,9 @@
 #include "world.h"
+#include "entity.h"
+#include "room.h"
+#include "creature.h"
+#include "exit.h"
+#include <list>
 
 Zork::World::World()
 {
@@ -6,35 +11,79 @@ Zork::World::World()
 
 	Intro();
 
-	Entity* entity1 = new Entity("Name1", "Desc1", NULL);
-	Entity* entity2 = new Entity("Name2", "Desc2", entity1);
-	Entity* entity3 = new Entity("Name3", "Desc3", entity2);
-	Entity* entity4 = new Entity("Name4", "Desc4", entity1);
+	Room* obeliskRoom = new Room("Hall of ancient obelisk", "It is a dark circle shaped room.");
+	Room* fireRoom = new Room("Ancient hell", "It is a really hot area with blindingly bright lava flowing everywhere.");
+	Room* exitRoom = new Room("Shrine of Shana", "It is a room that resembles eternity with a overwhelmingly godly presence.");
+
+	entities.push_back(obeliskRoom);
+	entities.push_back(fireRoom);
+	entities.push_back(exitRoom);
+
+
+	Exit* obeliskNorth = new Exit("Shiny Door", 
+		"It has a cross shaped carving and hot steam is coming from it's sides.", 
+		Direction::NORTH, 
+		obeliskRoom, 
+		fireRoom, 
+		false);
+
+	Exit* obeliskEast = new Exit("pure white door", 
+		"It slightly illuminates the room.", 
+		Direction::EAST, 
+		obeliskRoom, 
+		exitRoom, 
+		false);
+
+	entities.push_back(obeliskNorth);
+	entities.push_back(obeliskEast);
+
+	obeliskRoom->Look();
+
+	// TODO: Make these NPC.
+	// These creatures are added for combat test.
+	Creature* earthCreature = new Creature(
+		"Rock Idol", 
+		"A unsettling idol that looks like a hovering human silhoulette made of rock.",
+		"Ripped off a rock from itself, charged it with mana and throwed it to",
+		obeliskRoom,
+		5,
+		2,
+		1,
+		NatureType::EARTH
+		);
+	Creature* fireCreature = new Creature(
+		"Hot Eye",
+		"A frightening creature that looks like a burning eye.",
+		"Created a spiral of fire charged with red mana and throwed it to",
+		obeliskRoom,
+		5,
+		2,
+		1,
+		NatureType::FIRE
+	);
+
+	entities.push_back(earthCreature);
+	entities.push_back(fireCreature);
 	
-	entity1->LookInside();
+	// Basic combat Test:
+	// std::vector<std::string> combatCommandsTest;
 
-	std::cout << std::endl;
-	
-	entity2->LookInside();	
+	// combatCommandsTest.push_back("attack");
+	// combatCommandsTest.push_back("Rock Idol");
 
-	std::cout << std::endl;
-
-	std::cout << "Find all results:" << std::endl;
-	std::list<Entity*> children;
-
-	entity1->FindAllInChildren(Zork::EntityType::ENTITY, &children);
-
-	for (std::list<Entity*>::const_iterator iterator = children.begin(); iterator != children.cend(); ++iterator)
-	{
-		std::cout << "\t" << (*iterator)->name << std::endl;	
-	}
+	// fireCreature->Attack(combatCommandsTest);
+	// fireCreature->Attack(combatCommandsTest);
+	// fireCreature->Attack(combatCommandsTest);
+	// fireCreature->Attack(combatCommandsTest);
+	// fireCreature->Attack(combatCommandsTest);
+	// fireCreature->Attack(combatCommandsTest);
 }
 
 void Zork::World::Intro()
 {
 	std::cout << "You find yourself in a dark area beneath the surface of the ground, slowly regaining your consciousness." << std::endl;
 	std::cout << "You see an obelisk right before you, surrounded with a faded magic sircle." << std::endl;
-	std::cout << "On the obelisk, lies four cavities. A triangle, a cross, a square and a circle." << std::endl;
+	std::cout << "On the obelisk, lies four cavities. A triangle, a square, a circle and a cross." << std::endl;
 	std::cout << "As you slowly regain your consciousness, you struggle to recall your name." << std::endl;
 
 	// Get character name as input from user until she/he decides:
@@ -50,7 +99,7 @@ std::string Zork::World::DetermineCharacterName()
 
 	while (!nameSelected)
 	{
-		std::cout << "Who am I?" << std::endl;
+		std::cout << "You ask yourself: \"Who am I?\"" << std::endl;
 		std::cin >> characterName;
 		
 		std::string answer = "";
@@ -74,14 +123,39 @@ std::string Zork::World::DetermineCharacterName()
 	return characterName;
 }
 
-bool Zork::World::Update(std::vector<std::string>& arguments)
+void Zork::World::Update(std::vector<std::string>& arguments)
 {
-	return false;
+	if (!Parse(arguments))
+	{
+		return;
+	}
+
+	GameLoop();
 }
 
 bool Zork::World::Parse(std::vector<std::string>& arguments)
 {
-	return false;
+	bool result = true;
+
+	switch (arguments.size())
+	{
+		case 0:
+		{
+			result = false;
+		} 
+		break;
+
+		case 1:
+		{
+			if (Util::Equals(arguments[0], "cls") || Util::Equals(arguments[0], "clear") || Util::Equals(arguments[0], "flush"))
+			{
+				system("CLS");
+			}
+		} 
+		break;
+	}
+
+	return result;
 }
 
 void Zork::World::GameLoop()
@@ -91,5 +165,10 @@ void Zork::World::GameLoop()
 
 Zork::World::~World()
 {
-	// TODO: Implement.
+	for (std::list<Entity*>::iterator iterator = entities.begin(); iterator != entities.end(); ++iterator)
+	{
+		delete (*iterator);
+	}
+
+	entities.clear();
 }
