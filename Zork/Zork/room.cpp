@@ -41,7 +41,7 @@ void Zork::Room::Look() const
 		}
 	}
 	// If there are items, print:
-	if (!Util::Equals("", itemsPrintBuffer))
+	if (!Util::Equals("", itemsPrintBuffer, false))
 	{
 		std::cout << "Inside there are:" << std::endl << itemsPrintBuffer;
 	}

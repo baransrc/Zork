@@ -142,14 +142,10 @@ std::string Zork::World::DetermineCharacterName()
 		
 		std::string answer = "";
 
-		while (answer != "Y" && 
-			   answer != "N" && 
-			   answer != "y" && 
-			   answer != "n" && 
-			   answer != "Yes" && 
-			   answer != "No" && 
-			   answer != "yes" && 
-			   answer != "no")
+		while ((!Util::Equals(answer, "y", false)) &&
+			   (!Util::Equals(answer, "yes", false)) &&
+			   (!Util::Equals(answer, "n", false)) && 
+			   (!Util::Equals(answer, "no", false)))
 		{
 			std::cout << "Is " << characterName << " my name? (Y\\N)" << std::endl;
 			std::cin >> answer;
@@ -185,7 +181,9 @@ bool Zork::World::Parse(std::vector<std::string>& arguments)
 
 		case 1:
 		{
-			if (Util::Equals(arguments[0], "cls") || Util::Equals(arguments[0], "clear") || Util::Equals(arguments[0], "flush"))
+			if (Util::Equals(arguments[0], "cls", false) || 
+				Util::Equals(arguments[0], "clear", false) || 
+				Util::Equals(arguments[0], "flush", false))
 			{
 				system("CLS");
 			}

@@ -79,7 +79,7 @@ Zork::Entity* Zork::Entity::FindInChildren(const std::string childName) const
 {
 	for (std::list<Entity*>::const_iterator iterator = children.begin(); iterator != children.cend(); ++iterator)
     {
-        if (Util::Equals((*iterator)->name, childName))
+        if (Util::Equals((*iterator)->name, childName, false))
         {
             return (*iterator);
         }
@@ -93,7 +93,7 @@ Zork::Entity* Zork::Entity::FindInChildren(const std::string childName, EntityTy
 {
 	for (std::list<Entity*>::const_iterator iterator = children.begin(); iterator != children.cend(); ++iterator)
     {
-        if (Util::Equals((*iterator)->name, childName) && (*iterator)->GetType() == childType)
+        if (Util::Equals((*iterator)->name, childName, false) && (*iterator)->GetType() == childType)
         {
             return (*iterator);
         }
