@@ -65,10 +65,24 @@ void Zork::Room::LookInside() const
     Look();
 }
 
-
 const Zork::EntityType Zork::Room::GetType() const
 {
     return Zork::EntityType::ROOM;
+}
+
+const Zork::Exit* Zork::Room::GetExit(Direction direction) const
+{
+	std::list<Entity*> childrenReference = GetChildren();
+
+	for (std::list<Entity*>::const_iterator iterator = childrenReference.begin(); iterator != childrenReference.cend(); ++iterator)
+	{
+		if ((*iterator)->GetType() == EntityType::EXIT)
+		{
+			return (Exit*)(*iterator);		
+		}
+	}
+
+	return NULL;
 }
 
 Zork::Room::~Room()

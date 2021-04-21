@@ -1,8 +1,11 @@
 #pragma once
 #include "entity.h"
+#include "direction.h"
 
 namespace Zork
 {
+	class Exit;
+
 	class Room : public Entity
 	{
 	public:			
@@ -11,7 +14,8 @@ namespace Zork
 		void Look() const;
 		void LookInside() const;
 		const EntityType GetType() const;
-		
+		const Exit* GetExit(Direction direction) const;
+
 		~Room();
 	};
 }
