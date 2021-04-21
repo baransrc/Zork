@@ -151,7 +151,7 @@ void Zork::Creature::PrintInventory() const
 {
 	if (GetChildren().size() == 0)
     {
-        std::cout << "There is nothing inside the inventory of" << name << std::endl; 
+        std::cout << "There is nothing inside the inventory of " << name << std::endl; 
         return;
     }
 
@@ -159,7 +159,7 @@ void Zork::Creature::PrintInventory() const
 
     for (std::list<Entity*>::const_iterator iterator = GetChildren().begin(); iterator != GetChildren().cend(); ++iterator)
     {
-        std::cout << "\t" << (*iterator)->name << std::endl;
+        std::cout << "  " << (*iterator)->name << std::endl;
     } 
 }
 
