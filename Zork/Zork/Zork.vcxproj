@@ -140,9 +140,11 @@
     <ClInclude Include="entity_type.h" />
     <ClInclude Include="exit.h" />
     <ClInclude Include="item.h" />
+    <ClInclude Include="item_type.h" />
     <ClInclude Include="nature_type.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="room.h" />
+    <ClInclude Include="stats.h" />
     <ClInclude Include="util.h" />
     <ClInclude Include="world.h" />
   </ItemGroup>

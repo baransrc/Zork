@@ -1,6 +1,7 @@
 #pragma once
 #include "entity.h"
 #include "nature_type.h"
+#include "stats.h"
 
 namespace Zork
 {
@@ -12,9 +13,8 @@ namespace Zork
 	public: 
 		Creature(const char* newName, const char* newDescription, 
 			     const char* newAttackDescription, 
-				 Room* newRoom, int newHealthMultiplier, 
-				 int newAttackMultiplier, 
-				 int newDefenceMultiplier, 
+				 Room* newRoom, 
+				 Stats newStats,
 				 NatureType newNatureType);
 		
 		virtual void Update();
@@ -34,17 +34,14 @@ namespace Zork
 		virtual const int GetDefenceAmount() const;
 		virtual const int GetAttackAmount() const;
 
-		const int GetHealthMultiplier() const;
-		const int GetAttackMultiplier() const;
-		const int GetDefenceMultiplier() const;
-
+		const Stats GetStats() const;
 		const int GetMaxHealth() const;
-		void SetHealth(int newHealth);
-		void AddHealth(int addition); // Can be used to decrease health if given negative integers.
-		
 		const bool PlayerInsideRoom() const;
 		const bool IsAlive() const;
-	
+
+		void SetHealth(int newHealth);
+		void AddHealth(int addition); // Can be used to decrease health if given negative integers.
+			
 		~Creature();
 	public:
 		std::string attackDescription;
@@ -55,9 +52,7 @@ namespace Zork
 	private:
 		int currentHealth;
 	protected:
-		int healthMultiplier;
-		int attackMultiplier;
-		int defenceMultiplier;
+		Stats stats;
 	};
 }
 

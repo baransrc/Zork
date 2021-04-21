@@ -2,15 +2,12 @@
 
 Zork::Creature::Creature(const char* newName, const char* newDescription, 
 			     const char* newAttackDescription, 
-				 Room* newRoom, int newHealthMultiplier, 
-				 int newAttackMultiplier, 
-				 int newDefenceMultiplier, 
+				 Room* newRoom, 
+				 Stats newStats,
 				 NatureType newNatureType) : Entity(newName, newDescription, (Entity*)newRoom)
 {
 	attackDescription = newAttackDescription;
-	healthMultiplier = newHealthMultiplier;
-	attackMultiplier = newAttackMultiplier;
-	defenceMultiplier = newDefenceMultiplier;
+	stats = newStats;
 	natureType = newNatureType; 
 	combatTarget = NULL;
 	weapon = NULL;
@@ -193,24 +190,14 @@ const Zork::EntityType Zork::Creature::GetType() const
 	return CREATURE;
 }
 
-const int Zork::Creature::GetHealthMultiplier() const
+const Zork::Stats Zork::Creature::GetStats() const
 {
-	return healthMultiplier;
-}
-
-const int Zork::Creature::GetAttackMultiplier() const
-{
-	return attackMultiplier;
-}
-
-const int Zork::Creature::GetDefenceMultiplier() const
-{
-	return defenceMultiplier;
+	return stats;
 }
 
 const int Zork::Creature::GetDefenceAmount() const
 {
-	float maximumDefence = (float)(defenceMultiplier * 10.0f);
+	float maximumDefence = (float)(stats.defence * 10.0f);
 
 	if (armor != NULL)
 	{
@@ -222,7 +209,7 @@ const int Zork::Creature::GetDefenceAmount() const
 
 const int Zork::Creature::GetAttackAmount() const
 {
-	float maximumAttack = (float)(attackMultiplier * 10.0f);
+	float maximumAttack = (float)(stats.attack * 10.0f);
 
 	if (weapon != NULL)
 	{
@@ -234,7 +221,7 @@ const int Zork::Creature::GetAttackAmount() const
 
 const int Zork::Creature::GetMaxHealth() const
 {
-	return healthMultiplier * 10;
+	return stats.health * 10;
 }
 
 void Zork::Creature::SetHealth(int newHealth)

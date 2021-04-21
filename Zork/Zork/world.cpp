@@ -3,6 +3,7 @@
 #include "room.h"
 #include "creature.h"
 #include "exit.h"
+#include "stats.h"
 #include <list>
 
 Zork::World::World()
@@ -41,14 +42,13 @@ Zork::World::World()
 
 	// TODO: Make these NPC.
 	// These creatures are added for combat test.
+	Stats monsterStats = {5,2,1}; // This is used as plain old data.
 	Creature* earthCreature = new Creature(
 		"Rock Idol", 
 		"A unsettling idol that looks like a hovering human silhoulette made of rock.",
 		"Ripped off a rock from itself, charged it with mana and throwed it to",
 		obeliskRoom,
-		5,
-		2,
-		1,
+		monsterStats,
 		NatureType::EARTH
 		);
 	Creature* fireCreature = new Creature(
@@ -56,9 +56,7 @@ Zork::World::World()
 		"A frightening creature that looks like a burning eye.",
 		"Created a spiral of fire charged with red mana and throwed it to",
 		obeliskRoom,
-		5,
-		2,
-		1,
+		monsterStats,
 		NatureType::FIRE
 	);
 
