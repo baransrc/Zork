@@ -1,4 +1,5 @@
 #include "creature.h"
+#include "item.h"
 
 Zork::Creature::Creature(const char* newName, const char* newDescription, 
 			     const char* newAttackDescription, 
@@ -31,10 +32,75 @@ void Zork::Creature::Update()
 
 void Zork::Creature::Equip(const std::vector<std::string>& arguments)
 {
+	if (!IsAlive())
+	{
+		return;
+	}
+
+	Item* item = (Item*)FindInChildren(arguments[1], EntityType::ITEM);
+
+	if (item == NULL)
+	{
+		std::cout << "There is no item in inventory with name " << arguments[1] << std::endl;
+		
+		return;
+	}
+
+	switch (item->GetItemType())
+	{
+		case ItemType::WEAPON:
+		{
+			weapon = item;
+		}
+		break;
+
+		case ItemType::ARMOR:
+		{
+			armor = item;
+		} 
+		break;
+
+		default:
+		{
+			std::cout << item->name << " cannot be equipped." << std::endl;
+			
+			return;
+		}
+	}
+
+	std::cout << name << " equipped " << item->name << std::endl;
 }
 
 void Zork::Creature::Unequip(const std::vector<std::string>& arguments)
 {
+	if (!IsAlive())
+	{
+		return;
+	}
+
+	Item* item = (Item*)FindInChildren(arguments[1], EntityType::ITEM);
+
+	if (item == NULL)
+	{
+		std::cout << "There is no item equipped that has the name " << arguments[1] << std::endl;
+		
+		return;
+	}
+
+	if (item == weapon)
+	{
+		weapon = NULL;
+	} 
+	else if (item == armor)
+	{
+		armor = NULL;
+	} 
+	else
+	{
+		std::cout << item->name << " cannot be unequipped since it is not equipped." << std::endl;
+	}
+
+	std::cout << name << " unequipped " << item->name << std::endl;
 }
 
 void Zork::Creature::Go(const std::vector<std::string>&arguments)
@@ -72,7 +138,7 @@ void Zork::Creature::Attack(const std::vector<std::string>& arguments)
 	
 	if (!combatTarget->IsAlive())
 	{
-		std::cout << name << " is already dead." << std::endl;
+		std::cout << combatTarget->name << " is already dead." << std::endl;
 		return;
 	}
 
@@ -197,31 +263,53 @@ const Zork::Stats Zork::Creature::GetStats() const
 
 const int Zork::Creature::GetDefenceAmount() const
 {
-	float maximumDefence = (float)(stats.defence * 10.0f);
+	int defence = stats.defence;
 
 	if (armor != NULL)
 	{
-		// TODO: Add armor's defence multiplier.
+		defence += armor->GetStats().defence;
 	} 
 
-	return Util::RandomNumber(((int)maximumDefence), ((int)(maximumDefence * 1.5f)));
+	if (weapon != NULL)
+	{
+		defence += weapon->GetStats().defence;
+	}
+
+	return Util::RandomNumber((defence * 10), (defence * 15));
 }
 
 const int Zork::Creature::GetAttackAmount() const
 {
-	float maximumAttack = (float)(stats.attack * 10.0f);
+	int attack = stats.attack;
+
+	if (armor != NULL)
+	{
+		attack += armor->GetStats().attack;
+	} 
 
 	if (weapon != NULL)
 	{
-		// TODO: Add weapon's attack multiplier.
-	} 
+		attack += weapon->GetStats().attack;
+	}
 
-	return Util::RandomNumber(((int)maximumAttack), ((int)(maximumAttack * 1.5f)));
+	return Util::RandomNumber((attack * 10), (attack * 15));
 }
 
 const int Zork::Creature::GetMaxHealth() const
 {
-	return stats.health * 10;
+	int health = stats.health;
+
+	if (armor != NULL)
+	{
+		health += armor->GetStats().health;
+	} 
+
+	if (weapon != NULL)
+	{
+		health += weapon->GetStats().health;
+	}
+
+	return health * 10;
 }
 
 void Zork::Creature::SetHealth(int newHealth)

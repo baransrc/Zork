@@ -4,6 +4,7 @@
 #include "creature.h"
 #include "exit.h"
 #include "stats.h"
+#include "item.h"
 #include <list>
 
 Zork::World::World()
@@ -12,6 +13,7 @@ Zork::World::World()
 
 	Intro();
 
+	// Rooms:
 	Room* obeliskRoom = new Room("Hall of ancient obelisk", "It is a dark circle shaped room.");
 	Room* fireRoom = new Room("Ancient hell", "It is a really hot area with blindingly bright lava flowing everywhere.");
 	Room* exitRoom = new Room("Shrine of Shana", "It is a room that resembles eternity with a overwhelmingly godly presence.");
@@ -20,7 +22,7 @@ Zork::World::World()
 	entities.push_back(fireRoom);
 	entities.push_back(exitRoom);
 
-
+	// Exits:
 	Exit* obeliskNorth = new Exit("Shiny Door", 
 		"It has a cross shaped carving and hot steam is coming from it's sides.", 
 		Direction::NORTH, 
@@ -38,8 +40,8 @@ Zork::World::World()
 	entities.push_back(obeliskNorth);
 	entities.push_back(obeliskEast);
 
-	obeliskRoom->Look();
 
+	// Creatures:
 	// TODO: Make these NPC.
 	// These creatures are added for combat test.
 	Stats monsterStats = {5,2,1}; // This is used as plain old data.
@@ -62,19 +64,57 @@ Zork::World::World()
 
 	entities.push_back(earthCreature);
 	entities.push_back(fireCreature);
+
+	// Items:
+	Stats staffStats = {0, 1, 0};
+	Item* staff = new Item("Staff", 
+		"A staff made of a branch of the tree of life.", 
+		fireCreature, 
+		ItemType::WEAPON, 
+		staffStats);
+
+	Stats armorStats = {0, 0, 2};
+	Item* armor = new Item("Robe", 
+		"A blue robe made of dragon hair.",
+		earthCreature,
+		ItemType::ARMOR, 
+		armorStats);
+
+	obeliskRoom->Look();
+
+	entities.push_back(staff);
+	entities.push_back(armor);
 	
 	// Basic combat Test:
-	// std::vector<std::string> combatCommandsTest;
+	std::vector<std::string> combatCommandsTest;
 
-	// combatCommandsTest.push_back("attack");
-	// combatCommandsTest.push_back("Rock Idol");
+	combatCommandsTest.push_back("attack");
+	combatCommandsTest.push_back("Rock Idol");
 
-	// fireCreature->Attack(combatCommandsTest);
-	// fireCreature->Attack(combatCommandsTest);
-	// fireCreature->Attack(combatCommandsTest);
-	// fireCreature->Attack(combatCommandsTest);
-	// fireCreature->Attack(combatCommandsTest);
-	// fireCreature->Attack(combatCommandsTest);
+	fireCreature->Attack(combatCommandsTest);
+
+	std::vector<std::string> equipWeaponCommandsTest;
+	equipWeaponCommandsTest.push_back("equip");
+	equipWeaponCommandsTest.push_back("Staff");
+
+	fireCreature->Equip(equipWeaponCommandsTest);
+
+	fireCreature->Attack(combatCommandsTest);
+
+	std::vector<std::string> equipArmorCommandsTest;
+	equipArmorCommandsTest.push_back("equip");
+	equipArmorCommandsTest.push_back("Robe");
+	earthCreature->Equip(equipArmorCommandsTest);
+
+	fireCreature->Attack(combatCommandsTest);
+
+	earthCreature->Unequip(equipArmorCommandsTest);
+
+	fireCreature->Attack(combatCommandsTest);
+
+	fireCreature->Unequip(equipWeaponCommandsTest);
+
+	fireCreature->Attack(combatCommandsTest);
 }
 
 void Zork::World::Intro()
