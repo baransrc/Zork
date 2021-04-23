@@ -575,6 +575,13 @@ bool Zork::World::Parse(std::vector<std::string>& arguments)
 		userQuit = true;
 	}
 
+	else if (Util::Equals(arguments[0], "help", false))
+	{
+		std::cout << std::endl 
+			      << "cls/clear/flush:\nClears the terminal.\n\n\ndrop/put/place:\n\"drop/put/place item_0\" drops item_0 to current room if item_0 is in inventory.\n\"drop/put/place item_0 inside/in/on/.../ item_1\" places item_0 inside item_1.\n\n\ntake/loot/get/pick:\n\"take/loot/get/ pick item_0\" adds the item with name item_0 to the inventory.\n\"take/loot/get/pick item_0 from/../ item_1\", takes the item_0 from item_1 and adds it to the inventory.\n\n\ngo/move/walk:\nIf follwed by north/south/east/west, it makes player move to that direction if an exit exists and it's unlocked.\n\n\nlook/gaze/l:\n\"look/gaze/l\" shows the description of the current room.\n\"look/gaze/l entity_0\" shows description of entity_0.\n\n\nexamine/inspect/info:\n\"info/inspect/examine character_name/me\" displays detailed info such as stats, equipped items and runes of player.\n\"examine/inspect/info entity_0\" displays description of entity_0.\n\n\nequip/eq:\n\"equip/eq item_0\" makes player character equip item_0 in her inventory.\n\n\nunequip/uneq:\n\"unequip/uneq item_0\" makes player character unequip the equipped item_0.\n\n\ncommit/add:\n\"commit/add attack/defence/health number\" will increase that certain stat by number if that amount of uncommitted points are available.\n\n\nbag/inventory/ inv:\nLists the items in player's inventory.\nexit/quit/terminate/esc:\nTerminates the game.\n\n\nhelp:\nDisplays this message." << std::endl;
+	
+	}
+
 	return result;
 }
 
