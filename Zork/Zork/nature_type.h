@@ -4,9 +4,9 @@ namespace Zork
 {
 	enum NatureType
 	{
-		WATER,
-		EARTH,
 		AIR,
+		EARTH,
+		WATER,
 		FIRE,
 		NONE,
 	};
@@ -69,6 +69,42 @@ namespace Zork
 			}
 
 			case NatureType::NONE:
+			{
+				return "None";
+			}
+
+			default:
+			{
+				return "None";
+			}
+		}
+	}
+
+	inline const char* NatureTypeShapeFromInt(const int i)
+	{
+		switch (i)
+		{
+			case 0:
+			{
+				return "triangle";
+			}
+
+			case 1:
+			{
+				return "square";
+			}
+
+			case 2:
+			{
+				return "cross";
+			}
+
+			case 3:
+			{
+				return "circle";
+			}
+
+			case 4:
 			{
 				return "None";
 			}

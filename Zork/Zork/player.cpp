@@ -175,8 +175,36 @@ void Zork::Player::Take(const std::vector<std::string>& arguments)
 		// First case described above:
 		case 2:
 		{
+			if (Util::Equals(arguments[1], "all", false))
+			{
+				std::list<Entity*> allItems;
+				
+				((Entity*)GetRoom())->FindAllInChildren(EntityType::ITEM, &allItems);
+
+				if (allItems.size() <= 0)
+				{
+					std::cout << std::endl << name 
+						      << ": There is no item in current room." << std::endl;
+
+					return;
+				}
+
+				for (
+					std::list<Entity*>::iterator it = allItems.begin();
+					it != allItems.end();
+					++it
+					)
+				{
+					(*it)->SetParent(this);
+
+					std::cout << std::endl << name << " took " << (*it)->name << std::endl;
+				}
+
+				return;
+			}
+
 			// Look for item in current room:
-			Item* item = (Item*)GetParent()->FindInChildren(arguments[1], EntityType::ITEM);
+			Item* item = (Item*)(GetParent()->FindInChildren(arguments[1], EntityType::ITEM));
 
 			if (item == NULL)
 			{
@@ -194,28 +222,37 @@ void Zork::Player::Take(const std::vector<std::string>& arguments)
 		// Second case described above:
 		case 4:
 		{
-			// Look for item in the current room.
-			Item* parentItem = (Item*)GetParent()->FindInChildren(arguments[3], EntityType::ITEM);
+			// Look for entity in the current room.
+			Entity* parent = GetParent()->FindInChildren(arguments[3]);
 			
-			// If it is not in the room, search it inside inventory.
-			if (parentItem == NULL)
+			// If it is not in the room, search it inside inventory as item.
+			if (parent == NULL)
 			{
-				parentItem = (Item*)FindInChildren(arguments[3], EntityType::ITEM);
+				parent = FindInChildren(arguments[3], EntityType::ITEM);
 			}
 
-			if (parentItem == NULL)
+			// If no such entity exists in inventory:
+			if (parent == NULL)
 			{
 				std::cout << std::endl << name << ":I couldn't find the item named \""
 					      << arguments[3] << "\". " << std::endl;
 				return;
 			}
 
-			Item* childItem = (Item*)parentItem->FindInChildren(arguments[1], EntityType::ITEM);
+			// If finded entity is not an item nor an obelisk:
+			if (parent->GetType() != EntityType::ITEM && parent->GetType() != EntityType::OBELISK)
+			{
+				std::cout << std::endl << name << ":I couldn't find the item named \""
+					<< arguments[3] << "\". " << std::endl;
+				return;
+			}
+
+			Item* childItem = (Item*)parent->FindInChildren(arguments[1], EntityType::ITEM);
 
 			if (childItem == NULL)
 			{
 				std::cout << std::endl << name << ": I couldn't find the item named \"" 
-					      << arguments[3] << "\" inside \"" << parentItem->name 
+					      << arguments[3] << "\" inside \"" << parent->name 
 					      << "\"." << std::endl;
 				return;
 			}
@@ -398,31 +435,47 @@ void Zork::Player::Put(const std::vector<std::string>& arguments)
 			
 			item->SetParent((Entity*)GetRoom());
 
-			std::cout << std::endl << name << " dropped " << item->name << std::endl;
+			if (item->GetParent() == (Entity*)GetRoom())
+			{
+				std::cout << std::endl << name << " dropped " << item->name << std::endl;
+			}
 		}
 		break;
 
 		// If arguments are of the form DROP/PUT ITEM_NAME_0 TO ITEM_NAME_1
 		case 4:
 		{
-			Item* parentItem = (Item*)GetParent()->FindInChildren(arguments[3], EntityType::ITEM);
+			Entity* parent = GetParent()->FindInChildren(arguments[3]);
 
-			if (parentItem == NULL)
+			if (parent == NULL)
 			{
-				std::cout << std::endl << name << ": There is no item named \""
+				std::cout << std::endl << name << ": There is nothing named \""
 					      << arguments[3] << "\" in current room." << std::endl;
 				return;
 			}
 
-			// This deals with ridiculous cases such as
-			// putting a robe inside staff:
-			if (!parentItem->CanContainChildren())
+			if (parent->GetType() == EntityType::ITEM)
+			{
+				// This deals with ridiculous cases such as
+				// putting a robe inside staff:
+				if (!(((Item*)parent)->CanContainChildren()))
+				{
+					std::cout << std::endl << name << ": I cannot place anything inside \""
+						<< arguments[3] << "\"." << std::endl;
+					return;
+				}
+			} 
+			else if (parent->GetType() == EntityType::OBELISK)
+			{
+				// Not proud of this block of code.
+			} 
+			else
 			{
 				std::cout << std::endl << name << ": I cannot place anything inside \""
-					<< arguments[3] << "\"." << std::endl;
+						  << arguments[3] << "\"." << std::endl;
 				return;
 			}
-
+			
 			Item* childItem = (Item*)FindInChildren(arguments[1], EntityType::ITEM);
 
 			if (childItem == NULL)
@@ -434,10 +487,14 @@ void Zork::Player::Put(const std::vector<std::string>& arguments)
 
 			Unequip(childItem, false);
 
-			childItem->SetParent(parentItem);
+			childItem->SetParent(parent);
 
-			std::cout << std::endl << name << " placed " << childItem->name 
-				      << " inside " << parentItem->name << std::endl;
+			if (childItem->GetParent() == parent)
+			{
+				std::cout << std::endl << name << " placed " << childItem->name
+					<< " inside " << parent->name << std::endl;
+
+			}
 		}
 		break;
 

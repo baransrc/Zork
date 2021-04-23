@@ -127,6 +127,7 @@
     <ClCompile Include="entity.cpp" />
     <ClCompile Include="exit.cpp" />
     <ClCompile Include="item.cpp" />
+    <ClCompile Include="obelisk.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="room.cpp" />
     <ClCompile Include="world.cpp" />
@@ -141,6 +142,7 @@
     <ClInclude Include="item.h" />
     <ClInclude Include="item_type.h" />
     <ClInclude Include="nature_type.h" />
+    <ClInclude Include="obelisk.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="room.h" />
     <ClInclude Include="stats.h" />

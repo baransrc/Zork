@@ -39,6 +39,9 @@
     <ClCompile Include="item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="obelisk.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="world.h">
@@ -78,6 +81,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="stats.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="obelisk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,7 +10,8 @@ namespace Zork
 		ITEM,
 		CREATURE,
 		NPC,
-		PLAYER
+		PLAYER,
+		OBELISK,
 	};
 
 	inline const char* EntityTypeToString(const EntityType type)
@@ -50,6 +51,11 @@ namespace Zork
 			case EntityType::PLAYER:
 			{
 				return "Player";
+			}
+
+			case EntityType::OBELISK:
+			{
+				return "Obelisk";
 			}
 
 			default:

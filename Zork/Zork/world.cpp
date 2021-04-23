@@ -6,6 +6,7 @@
 #include "exit.h"
 #include "stats.h"
 #include "item.h"
+#include "obelisk.h"
 #include <list>
 
 Zork::World::World()
@@ -49,7 +50,7 @@ Zork::World::World()
 		Direction::EAST,
 		obeliskRoom,
 		exitRoom,
-		false
+		true
 	);
 	Exit* obeliskWest = new Exit(
 		"Black Broken Wall",
@@ -355,7 +356,7 @@ Zork::World::World()
 		earthCreature,
 		ItemType::RUNE,
 		zeroStats,
-		NatureType::AIR
+		NatureType::EARTH
 	);
 
 
@@ -367,7 +368,16 @@ Zork::World::World()
 	entities.push_back(airRune);
 	entities.push_back(earthRune);
 
-	obeliskRoom->Look();
+	Obelisk* obelisk = new Obelisk(
+		"Obelisk",
+		"It has four cavities, from top to bottom there are a triangle, a square, a circle and a cross.",
+		obeliskRoom,
+		obeliskEast
+	);
+
+	entities.push_back(obelisk);
+
+	player->GetParent()->Look();
 }
 
 std::string Zork::World::Intro()

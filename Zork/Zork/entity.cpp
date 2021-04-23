@@ -9,7 +9,6 @@ Zork::Entity::Entity(const char* newName, const char* newDescription, Entity* ne
 
 void Zork::Entity::Look() const
 {
-    std::cout << "Looking at entity: " << std::endl;
     std::cout << name << std::endl << description << std::endl;
 }
 
@@ -55,6 +54,11 @@ void Zork::Entity::SetParent(Entity * newParent)
     if (newParent != NULL)
     {
         newParent->AddChild(this);
+
+		if (newParent->FindInChildren(this) == NULL)
+		{
+			return;
+		}
     }
 
     parent = newParent;
