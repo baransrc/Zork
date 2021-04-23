@@ -11,7 +11,8 @@ namespace Zork
 	class Creature : public Entity
 	{
 	public: 
-		Creature(const char* newName, const char* newDescription, 
+		Creature(const char* newName, 
+				 const char* newDescription, 
 			     const char* newAttackDescription, 
 				 Room* newRoom, 
 				 Stats newStats,

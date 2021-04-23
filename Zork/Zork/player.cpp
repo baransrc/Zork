@@ -50,7 +50,8 @@ void Zork::Player::Equip(Item* item, bool verbose)
 		{
 			if (verbose)
 			{
-				std::cout << name << ": " << item->name << " cannot be equipped." << std::endl;
+				std::cout << std::endl << name << ": " 
+					      << item->name << " cannot be equipped." << std::endl;
 			}
 
 			return;
@@ -59,7 +60,7 @@ void Zork::Player::Equip(Item* item, bool verbose)
 
 	if (verbose)
 	{
-		std::cout << name << " equipped " << item->name << std::endl;
+		std::cout << std::endl << name << " equipped " << item->name << std::endl;
 	}
 }
 
@@ -97,11 +98,12 @@ void Zork::Player::Unequip(Item* item, bool verbose)
 
 	if (!unequippedSomething)
 	{
-		std::cout << item->name << " cannot be unequipped since it is not equipped." << std::endl;
+		std::cout << std::endl << item->name 
+			      << " cannot be unequipped since it is not equipped." << std::endl;
 		return;
 	}
 
-	std::cout << name << " unequipped " << item->name << std::endl;
+	std::cout << std::endl << name << " unequipped " << item->name << std::endl;
 }
 
 void Zork::Player::Go(const std::vector<std::string>& arguments)
@@ -667,8 +669,8 @@ void Zork::Player::CommitStats(const std::vector<std::string>& arguments)
 
 	if (Util::Equals(statStr, "attack", false))
 	{
-		std::cout << std::endl << name << ": I committed " 
-				  << committedPoints << " to Attack." << std::endl;
+		std::cout << std::endl << name << " has committed " 
+				  << committedPoints << " point(s) to Attack." << std::endl;
 
 		stats.attack += committedPoints;
 
@@ -676,8 +678,8 @@ void Zork::Player::CommitStats(const std::vector<std::string>& arguments)
 	}
 	else if (Util::Equals(statStr, "defence", false))
 	{
-		std::cout << std::endl << name << ": I committed " 
-			      << committedPoints << " to Defence." << std::endl;
+		std::cout << std::endl << name << " has committed " 
+			      << committedPoints << " point(s) Defence." << std::endl;
 
 		stats.defence += committedPoints;
 		
@@ -685,8 +687,8 @@ void Zork::Player::CommitStats(const std::vector<std::string>& arguments)
 	}
 	else if (Util::Equals(statStr, "health", false))
 	{
-		std::cout << std::endl << name << ": I committed " 
-			      << committedPoints << " to Health." << std::endl;
+		std::cout << std::endl << name << " has committed "  
+			      << committedPoints << " point(s) Health." << std::endl;
 		
 		stats.health += committedPoints;
 
@@ -699,7 +701,7 @@ void Zork::Player::CommitStats(const std::vector<std::string>& arguments)
 
 void Zork::Player::Attack()
 {
-	std::cout << name << " turned condensed " << NatureTypeToString(natureType)
+	std::cout << std::endl << name << " turned condensed " << NatureTypeToString(natureType)
 		<< " " << attackDescription << " " << combatTarget->name << "."
 		<< std::endl;
 
@@ -725,9 +727,8 @@ void Zork::Player::Stun()
 {
 	combatTarget->GetStunned(natureType);
 
-	std::cout << name << " " << stunDescription << " " << NatureTypeToString(natureType)
-		      << " and trapped " << combatTarget->name << " inside it."
-		      << std::endl;
+	std::cout << std::endl << name << " " << stunDescription << " " << NatureTypeToString(natureType)
+		      << " and trapped " << combatTarget->name << " inside it." << std::endl;
 }
 
 void Zork::Player::Prayer()

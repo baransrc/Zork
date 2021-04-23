@@ -14,6 +14,7 @@ Zork::Creature::Creature(const char* newName,
 	combatTarget = NULL;
 	weapon = NULL;
 	armor = NULL;
+	stunLock = 0;
 
 	SetHealth(GetMaxHealth());
 }
@@ -75,7 +76,7 @@ void Zork::Creature::Equip(Item* item, bool verbose)
 		{
 			if (verbose)
 			{
-				std::cout << name << ": " << item->name << " cannot be equipped." << std::endl;
+				std::cout << std::endl << name << ": " << item->name << " cannot be equipped." << std::endl;
 			}
 
 			return;
@@ -84,7 +85,7 @@ void Zork::Creature::Equip(Item* item, bool verbose)
 
 	if (verbose)
 	{
-		std::cout << name << " equipped " << item->name << std::endl;
+		std::cout << std::endl << name << " equipped " << item->name << std::endl;
 	}
 }
 
@@ -121,7 +122,8 @@ void Zork::Creature::Unequip(Item* item, bool verbose)
 	{
 		if (verbose)
 		{
-			std::cout << item->name << " cannot be unequipped since it is not equipped." << std::endl;
+			std::cout << std::endl << item->name 
+				      << " cannot be unequipped since it is not equipped." << std::endl;
 		}
 
 		return;
@@ -129,7 +131,8 @@ void Zork::Creature::Unequip(Item* item, bool verbose)
 
 	if (verbose)
 	{
-		std::cout << name << " unequipped " << item->name << std::endl;
+		std::cout << std::endl << name 
+			      << " unequipped " << item->name << std::endl;
 	}	
 }
 
@@ -142,7 +145,7 @@ void Zork::Creature::DropAll()
 		return;
 	}
 
-	std::cout << name << " dropped: " << std::endl;
+	std::cout << std::endl << name << " dropped: " << std::endl;
 
  	for (
 			std::list<Entity*>::iterator iterator = childrenReference.begin();
@@ -175,7 +178,7 @@ void Zork::Creature::Unequip(const std::vector<std::string>& arguments)
 
 	if (item == NULL)
 	{
-		std::cout << "There is no item equipped that has the name " << arguments[1] << std::endl;
+		std::cout << std::endl << "There is no item equipped that has the name " << arguments[1] << std::endl;
 
 		return;
 	}
@@ -235,11 +238,11 @@ void Zork::Creature::PrintInventory() const
 {
 	if (GetChildren().size() == 0)
 	{
-		std::cout << "There is nothing inside the inventory of " << name << std::endl;
+		std::cout << std::endl << "There is nothing inside the inventory of " << name << std::endl;
 		return;
 	}
 
-	std::cout << "Inventory of " << name << std::endl;
+	std::cout << std::endl << "Inventory of " << name << std::endl;
 
 	for (std::list<Entity*>::const_iterator iterator = GetChildren().begin(); iterator != GetChildren().cend(); ++iterator)
 	{
@@ -255,7 +258,7 @@ void Zork::Creature::TakeDamage(int takenDamage, NatureType otherNatureType)
 	{
 	case NatureTypeEffectiveness::NOT_EFFECTIVE:
 	{
-		std::cout << name << " is a " << Zork::NatureTypeToString(natureType)
+		std::cout << std::endl << name << " is a " << Zork::NatureTypeToString(natureType)
 			<< " type creature. " << Zork::NatureTypeToString(otherNatureType)
 			<< " type spells are not effective." << std::endl;
 	}
@@ -263,13 +266,13 @@ void Zork::Creature::TakeDamage(int takenDamage, NatureType otherNatureType)
 
 	case NatureTypeEffectiveness::EFFECTIVE:
 	{
-		std::cout << "It was effective." << std::endl;
+		std::cout << std::endl << "It was effective." << std::endl;
 	}
 	break;
 
 	case NatureTypeEffectiveness::OVERLY_EFFECTIVE:
 	{
-		std::cout << "It was very effective." << std::endl;
+		std::cout << std::endl << "It was very effective." << std::endl;
 	}
 
 	default:
@@ -283,7 +286,7 @@ void Zork::Creature::TakeDamage(int takenDamage, NatureType otherNatureType)
 
 	AddHealth(-finalDamage);
 
-	std::cout << name << " took " << finalDamage << " damage." << std::endl
+	std::cout << std::endl << name << " took " << finalDamage << " damage." << std::endl
 		<< name << " has " << currentHealth << " health remaining." << std::endl;
 
 	Die();
@@ -330,7 +333,7 @@ void Zork::Creature::Info() const
 		healthModifiers += weaponStats.health;
 	}
 
-	std::cout << "Health: " << GetCurrentHealth() << " out of " << GetMaxHealth() << std::endl;
+	std::cout << std::endl << "Health: " << GetCurrentHealth() << " out of " << GetMaxHealth() << std::endl;
 	std::cout << "Stats:" << std::endl;
 	std::cout << "  Attack:  " << stats.attack << "( +" << attackModifiers << " )" << std::endl;
 	std::cout << "  Defence: " << stats.defence << "( +" << defenceModifiers << " )" << std::endl;
@@ -355,7 +358,7 @@ void Zork::Creature::GetStunned(NatureType otherNatureType)
 	{
 		case NatureTypeEffectiveness::NOT_EFFECTIVE:
 		{
-			std::cout << name << " is a " << NatureTypeToString(natureType)
+			std::cout << std::endl << name << " is a " << NatureTypeToString(natureType)
 					  << " type creature. " << NatureTypeToString(otherNatureType)
 				      << " type spells are not effective. Hence, " << NatureTypeToString(otherNatureType)
 				      << " Stun was not effective." << std::endl;
@@ -365,7 +368,7 @@ void Zork::Creature::GetStunned(NatureType otherNatureType)
 		case NatureTypeEffectiveness::EFFECTIVE:
 		{
 			stunLock += 1;
-			std::cout << "Stun was effective." << name 
+			std::cout << std::endl << "Stun was effective." << name
 				      << " will not be avaliable to attack for " 
 				      << stunLock << " turns." << std::endl;
 		}
@@ -374,7 +377,7 @@ void Zork::Creature::GetStunned(NatureType otherNatureType)
 		case NatureTypeEffectiveness::OVERLY_EFFECTIVE:
 		{
 			stunLock += 2;
-			std::cout << "Stun was effective." << name
+			std::cout << std::endl << "Stun was effective." << name
 				<< " will not be avaliable to attack for "
 				<< stunLock << " turns." << std::endl;
 		}
@@ -400,7 +403,7 @@ const Zork::Room* Zork::Creature::GetRoom() const
 	}
 	catch (EntityType type)
 	{
-		std::cout << "Parent of " << name << " is of type: " << EntityTypeToString(type)
+		std::cout << std::endl << "Parent of " << name << " is of type: " << EntityTypeToString(type)
 			<< "Parent of a creature cannot be anything other than room." << std::endl;
 	}
 
@@ -431,7 +434,7 @@ const int Zork::Creature::GetDefenceAmount() const
 		defence += weapon->GetStats().defence;
 	}
 
-	return Util::RandomNumber((defence * 10), (defence * 15));
+	return Util::RandomNumber((defence * 3), (defence * 6));
 }
 
 const int Zork::Creature::GetAttackAmount() const

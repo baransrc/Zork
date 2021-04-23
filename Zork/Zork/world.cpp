@@ -1,7 +1,7 @@
 #include "world.h"
 #include "entity.h"
 #include "room.h"
-#include "creature.h"
+#include "NPC.h"
 #include "player.h"
 #include "exit.h"
 #include "stats.h"
@@ -277,18 +277,28 @@ Zork::World::World()
 
 	entities.push_back(player);
 
-	// --- Creatures ---
-	// TODO: Make these NPC.
-	// These creatures are added for combat test.
-	Stats monsterStats = { 5,2,1 };
-	Creature* earthCreature = new Creature(
-		"Hyx",
+	// --- Non Player Characters ---
+	Stats fireStats = { 10,4,3 };
+	Stats earthStats = { 12,2,3 };
+	Npc* fireCreature = new Npc(
+		"Od",
+		"It is a burning boar with molten iron legs looking like hammer.",
+		"Created a ball of fire charged with red mana from its fur and throwed it using it's iron legs to",
+		fireRoom,
+		fireStats,
+		NatureType::FIRE,
+		true
+	);
+	Npc* earthCreature = new Npc(
+		"Topra",
 		"A unsettling idol that looks like a hovering human silhoulette made of rock.",
 		"Ripped off a rock from itself, charged it with mana and throwed it to",
-		obeliskRoom,
-		monsterStats,
-		NatureType::EARTH
+		earthRoom,
+		earthStats,
+		NatureType::EARTH,
+		false
 	);
+
 	//Creature* fireCreature = new Creature(
 	//	"Hot Eye",
 	//	"A frightening creature that looks like a burning eye.",
@@ -299,7 +309,7 @@ Zork::World::World()
 	//);
 
 	entities.push_back(earthCreature);
-	//entities.push_back(fireCreature);
+	entities.push_back(fireCreature);
 
 	// --- Items ---
 	Stats staffStats = { 0, 1, 0 };
