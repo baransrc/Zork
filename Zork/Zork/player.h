@@ -13,7 +13,9 @@ namespace Zork
 			   const char* prayerDescription,
 			   const char* stunDescription,
 			   Stats newStats,
-			   Room* room);
+			   Room* room,
+			   Room* newEndRoom
+			 );
 
 		void Update();
 		void Go(const std::vector<std::string>& arguments);
@@ -31,6 +33,7 @@ namespace Zork
 		void Stun();
 		void Prayer();
 
+		const bool InEndRoom() const;
 		const bool HaveRune(NatureType natureType) const;
 		const EntityType GetType() const;
 	
@@ -43,5 +46,7 @@ namespace Zork
 		std::string stunDescription;
 		std::list<Item*> runes;
 		int statPoints;
+	private:
+		Room* endRoom;
 	};
 }

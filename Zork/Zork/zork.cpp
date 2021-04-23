@@ -9,8 +9,8 @@ int main()
 	Zork::World world;
 	std::string playerName = world.GetPlayerName();
 
-	// Trying input management:
-	while (true)
+	// While game is not ended, take input and update the game:
+	while (!world.IsGameEnded())
 	{
 		std::string userInput = "";
 
@@ -20,10 +20,15 @@ int main()
 
 		world.Update(tokens);
 
-		std::cout << std::endl << playerName << "> ";
+		if (!world.IsGameEnded())
+		{
+			std::cout << std::endl << playerName << "> ";
+		}
 
 		tokens.clear();
 	}
+
+	std::cout << std::endl << "Thank you for playing!" << std::endl;
 
 	system("pause");
 

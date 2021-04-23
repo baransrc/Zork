@@ -11,10 +11,12 @@ Zork::Player::Player(const char* newName,
                      const char* newPrayerDescription, 
                      const char* newStunDescription, 
                      Stats newStats, 
-                     Room * room) : Creature(newName, newDescription, newAttackDescription, room, newStats, NatureType::NONE)
+                     Room* room, 
+					 Room* newEndRoom) : Creature(newName, newDescription, newAttackDescription, room, newStats, NatureType::NONE)
 {
 	prayerDescription = newPrayerDescription;
 	stunDescription = newStunDescription;
+	endRoom = newEndRoom;
 }
 
 void Zork::Player::Update()
@@ -740,7 +742,10 @@ void Zork::Player::Prayer()
 		      << prayer << " health." << std::endl;  
 }
 
-
+const bool Zork::Player::InEndRoom() const
+{
+	return GetRoom() == endRoom;
+}
 
 const bool Zork::Player::HaveRune(NatureType natureType) const
 {

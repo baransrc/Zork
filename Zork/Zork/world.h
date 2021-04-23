@@ -19,9 +19,10 @@ namespace Zork
 		
 		void Update(std::vector<std::string>& arguments);
 		bool Parse(std::vector<std::string>& arguments);
-		void GameLoop();
+		void UpdateEntities();
 
 		const std::string GetPlayerName() const;
+		const bool IsGameEnded() const;
 
 		~World();
 
@@ -34,6 +35,7 @@ namespace Zork
 	
 	private:
 		Player* player;
+		bool userQuit;
 	};
 }
 

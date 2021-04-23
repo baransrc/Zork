@@ -11,12 +11,14 @@
 
 Zork::World::World()
 {
+	userQuit = false;
+
 	std::string playerName = Intro();
 
 	// --- Rooms ---
 	Room* obeliskRoom = new Room("Hall of ancient obelisk", "It is a dark circle shaped room.");
 	Room* fireRoom = new Room("Ancient hell", "It is a really hot area with blindingly bright lava flowing everywhere.");
-	Room* exitRoom = new Room("Shrine of Shana", "It is a room that resembles eternity with a overwhelmingly godly presence.");
+	Room* exitRoom = new Room("Shrine of Shana", "By the moment you enter the room, you feel relieved by the godly presence of Shana.\nShe says \"Go back to where you have been in your whole life\" to your mind.\nAs your memories come back to you, you find yourself staring at a terminal, playing a game made by Baran Surucu.");
 	Room* airRoom = new Room("Temple of Breeze", "You feel a breath blowing to your ears, it sounds like words of curse.");
 	Room* waterRoom = new Room("Lost Seas", "Your body is half in water, it feels like something alive.");
 	Room* earthRoom = new Room("Ancient Artifacts", "It is a room full of earthen artifacts that holds ancient technology.");
@@ -69,15 +71,15 @@ Zork::World::World()
 		false
 	);
 
-	// Exit room exits:
-	Exit* exitWest = new Exit(
-		"Dark Void",
-		"It leaks light to the other side and has a magic circle consisting of a triangle, a square, a circle and a cross.",
-		Direction::NORTH,
-		exitRoom,
-		obeliskRoom,
-		false
-	);
+	//// Exit room exits:
+	//Exit* exitWest = new Exit(
+	//	"Dark Void",
+	//	"It leaks light to the other side and has a magic circle consisting of a triangle, a square, a circle and a cross.",
+	//	Direction::NORTH,
+	//	exitRoom,
+	//	obeliskRoom,
+	//	false
+	//);
 
 	// Fire Room Exits:
 	Exit* fireRoomSouth = new Exit(
@@ -233,7 +235,7 @@ Zork::World::World()
 	entities.push_back(obeliskEast);
 	entities.push_back(obeliskWest);
 	entities.push_back(obeliskSouth);
-	entities.push_back(exitWest);
+	//entities.push_back(exitWest);
 	entities.push_back(fireRoomSouth);
 	entities.push_back(fireRoomWest);
 	entities.push_back(corridorEast);
@@ -267,7 +269,8 @@ Zork::World::World()
 		"recited a hymn to gods of mana.",
 		"formed a prison of",
 		playerStats,
-		obeliskRoom
+		obeliskRoom,
+		exitRoom
 	);
 
 	player->statPoints = 4;
@@ -531,6 +534,16 @@ bool Zork::World::Parse(std::vector<std::string>& arguments)
 		player->PrintInventory();
 	}
 
+	// Inventory arguments:
+	else if (Util::Equals(arguments[0], "exit", false) ||
+			 Util::Equals(arguments[0], "quit", false) ||
+			 Util::Equals(arguments[0], "terminate", false) ||
+			 Util::Equals(arguments[0], "esc", false)
+		)
+	{
+		userQuit = true;
+	}
+
 	return result;
 }
 
@@ -545,6 +558,11 @@ void Zork::World::UpdateEntities()
 const std::string Zork::World::GetPlayerName() const
 {
 	return player->name;
+}
+
+const bool Zork::World::IsGameEnded() const
+{
+	return !(player->IsAlive()) || player->InEndRoom() || userQuit;
 }
 
 Zork::World::~World()
