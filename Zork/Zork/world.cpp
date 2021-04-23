@@ -319,9 +319,10 @@ Zork::World::World()
 		false
 	);
 
-
 	entities.push_back(earthCreature);
 	entities.push_back(fireCreature);
+	entities.push_back(waterCreature);
+	entities.push_back(airCreature);
 
 	// --- Items ---
 	Stats staffStats = { 0, 1, 0 };
