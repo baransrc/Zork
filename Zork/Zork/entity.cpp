@@ -40,6 +40,11 @@ const Zork::EntityType Zork::Entity::GetType() const
     return EntityType::ENTITY;
 }
 
+void Zork::Entity::Info() const
+{
+	Look();
+}
+
 void Zork::Entity::SetParent(Entity * newParent)
 {
     if (parent != NULL)

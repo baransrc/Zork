@@ -7,6 +7,7 @@ namespace Zork
         ARMOR,
         WEAPON,
         RUNE,
+		CONTAINER,
     };
 
     inline const char* ItemTypeToString(const ItemType type)
@@ -27,6 +28,11 @@ namespace Zork
             {
                 return "Rune";
             }
+
+			case ItemType::CONTAINER:
+			{
+				return "Container";
+			}
         
             default:
             {

@@ -100,4 +100,13 @@ namespace Util
 		// Generate number between range:
 		return distribution(generator);
 	}
+
+	inline bool IsInteger(const std::string str)
+	{
+		char* end;
+		long integer = strtol(str.c_str(), &end, 10);
+
+		return (*end == '\0');
+	}
+
 }

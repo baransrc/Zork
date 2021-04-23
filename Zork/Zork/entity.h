@@ -18,6 +18,7 @@ namespace Zork
 		virtual void LookInside() const;
 		virtual void Update();
 		virtual const EntityType GetType() const;
+		virtual void Info() const;
 
 		virtual void SetParent(Entity* newParent);
 		void AddChild(Entity* child);

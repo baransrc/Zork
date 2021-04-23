@@ -6,7 +6,8 @@
 int main()
 {
 	// Initialize World:
-	Zork::World* world = new Zork::World();
+	Zork::World world;
+	std::string playerName = world.GetPlayerName();
 
 	// Trying input management:
 	while (true)
@@ -17,7 +18,9 @@ int main()
 		
 		std::vector<std::string> tokens = Util::SplitStringToWords(userInput);
 
-		world->Update(tokens);
+		world.Update(tokens);
+
+		std::cout << std::endl << playerName << "> ";
 
 		tokens.clear();
 	}

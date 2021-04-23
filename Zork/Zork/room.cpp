@@ -8,7 +8,7 @@ Zork::Room::Room(const char* name, const char* description) : Entity(name, descr
 
 void Zork::Room::Look() const
 {
-    std::cout << "You are in " << name << ". " << description << std::endl;
+    std::cout << std::endl << "You are in " << name << ". " << description << std::endl;
 
 	std::list<Entity*> childrenReference = GetChildren();
 	std::string printBuffer = "";
@@ -18,6 +18,11 @@ void Zork::Room::Look() const
 	{
 		if ((*iterator)->IsCreature())
 		{
+			if ((*iterator)->GetType() == EntityType::PLAYER)
+			{
+				continue;
+			}
+
 			bool isDead = !(((Creature*)(*iterator))->IsAlive());
 
 			if (isDead)
@@ -37,7 +42,7 @@ void Zork::Room::Look() const
 	{
 		if ((*iterator)->GetType() == EntityType::ITEM)
 		{
-			itemsPrintBuffer += "\tA " + (*iterator)->name + "\n";
+			itemsPrintBuffer += "  " + (*iterator)->name + "\n";
 		}
 	}
 	// If there are items, print:
@@ -76,7 +81,7 @@ const Zork::Exit* Zork::Room::GetExit(Direction direction) const
 
 	for (std::list<Entity*>::const_iterator iterator = childrenReference.begin(); iterator != childrenReference.cend(); ++iterator)
 	{
-		if ((*iterator)->GetType() == EntityType::EXIT)
+		if ((*iterator)->GetType() == EntityType::EXIT && ((Exit*)(*iterator))->GetDirection() == direction)
 		{
 			return (Exit*)(*iterator);		
 		}

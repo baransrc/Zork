@@ -11,7 +11,6 @@ namespace Zork
 	class Entity;
 	class Player;
 
-
 	class World
 	{
 	public:
@@ -22,6 +21,8 @@ namespace Zork
 		bool Parse(std::vector<std::string>& arguments);
 		void GameLoop();
 
+		const std::string GetPlayerName() const;
+
 		~World();
 
 	public:
@@ -29,7 +30,7 @@ namespace Zork
 
 	private:
 		std::string DetermineCharacterName();
-		void Intro();
+		std::string Intro();
 	
 	private:
 		clock_t updateTimer;

@@ -8,6 +8,7 @@ namespace Zork
 		EARTH,
 		AIR,
 		FIRE,
+		NONE,
 	};
 
 	enum NatureTypeEffectiveness
@@ -67,6 +68,11 @@ namespace Zork
 				return "Water";
 			}
 
+			case NatureType::NONE:
+			{
+				return "None";
+			}
+
 			default:
 			{
 				return "None";
@@ -74,6 +80,27 @@ namespace Zork
 		}
 	}
 
+	inline const NatureType StringToNatureType(const std::string type)
+	{
+		if (Util::Equals(type, NatureTypeToString(NatureType::FIRE), false))
+		{
+			return NatureType::FIRE;
+		}
+		else if (Util::Equals(type, NatureTypeToString(NatureType::WATER), false))
+		{
+			return NatureType::WATER;
+		}
+		else if (Util::Equals(type, NatureTypeToString(NatureType::AIR), false))
+		{
+			return NatureType::AIR;
+		}
+		else if (Util::Equals(type, NatureTypeToString(NatureType::EARTH), false))
+		{
+			return NatureType::EARTH;
+		}
+
+		return NatureType::NONE;
+	}
 
 	inline const NatureTypeEffectiveness GetOtherNatureTypeEffectiveness(const NatureType thisNatureType, const NatureType otherNatureType)
 	{
@@ -137,6 +164,11 @@ namespace Zork
 				}
 
 				return NatureTypeEffectiveness::EFFECTIVE;
+			}
+
+			case NatureType::NONE:
+			{
+				return NatureTypeEffectiveness::NOT_EFFECTIVE;
 			}
 
 			default:
