@@ -22,7 +22,6 @@ namespace Zork
 		virtual void Take(const std::vector<std::string>& arguments);
 		virtual void Look() const;
 		virtual void Look(const std::vector<std::string>& arguments) const;
-		virtual void LookInside(const std::vector<std::string>& arguments) const;
 		virtual void Put(const std::vector<std::string>& arguments);
 		virtual void Attack();
 		virtual void EnterCombat(const std::vector<std::string>& arguments);

@@ -709,6 +709,14 @@ void Zork::Player::Attack()
 	{
 		combatTarget->combatTarget = this;
 	}
+
+	if (!combatTarget->IsAlive())
+	{
+		statPoints += 1;
+
+		std::cout << std::endl << name << " has " 
+			      << statPoints << " uncommited stat points now." << std::endl;
+	}
 }
 
 void Zork::Player::Stun()

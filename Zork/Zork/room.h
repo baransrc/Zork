@@ -12,7 +12,6 @@ namespace Zork
 		Room(const char* name, const char* description);
 		
 		void Look() const;
-		void LookInside() const;
 		const EntityType GetType() const;
 		const Exit* GetExit(Direction direction) const;
 

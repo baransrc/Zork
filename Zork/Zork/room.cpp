@@ -65,10 +65,6 @@ void Zork::Room::Look() const
 	}
 }
 
-void Zork::Room::LookInside() const
-{
-    Look();
-}
 
 const Zork::EntityType Zork::Room::GetType() const
 {

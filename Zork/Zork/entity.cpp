@@ -12,24 +12,6 @@ void Zork::Entity::Look() const
     std::cout << name << std::endl << description << std::endl;
 }
 
-void Zork::Entity::LookInside() const
-{
-    Look();
-
-    if (children.size() == 0)
-    {
-        std::cout << "There is nothing inside it." << std::endl; 
-        return;
-    }
-
-    std::cout << "Inside there are:" << std::endl; 
-
-    for (std::list<Entity*>::const_iterator iterator = children.begin(); iterator != children.cend(); ++iterator)
-    {
-        std::cout << "\t" << (*iterator)->name << std::endl;
-    } 
-}
-
 void Zork::Entity::Update()
 {
 }

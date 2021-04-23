@@ -431,7 +431,7 @@ void Zork::World::Update(std::vector<std::string>& arguments)
 		return;
 	}
 
-	GameLoop();
+	UpdateEntities();
 }
 
 bool Zork::World::Parse(std::vector<std::string>& arguments)
@@ -534,7 +534,7 @@ bool Zork::World::Parse(std::vector<std::string>& arguments)
 	return result;
 }
 
-void Zork::World::GameLoop()
+void Zork::World::UpdateEntities()
 {
 	for (std::list<Entity*>::iterator iterator = entities.begin(); iterator != entities.end(); ++iterator)
 	{

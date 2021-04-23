@@ -15,7 +15,6 @@ namespace Zork
 		Entity(const char* newName, const char* newDescription, Entity* newParent);
 		
 		virtual void Look() const;
-		virtual void LookInside() const;
 		virtual void Update();
 		virtual const EntityType GetType() const;
 		virtual void Info() const;

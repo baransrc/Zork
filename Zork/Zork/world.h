@@ -33,8 +33,6 @@ namespace Zork
 		std::string Intro();
 	
 	private:
-		clock_t updateTimer;
-		
 		Player* player;
 	};
 }

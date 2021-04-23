@@ -200,10 +200,6 @@ void Zork::Creature::Look(const std::vector<std::string>& arguments) const
 {
 }
 
-void Zork::Creature::LookInside(const std::vector<std::string>& arguments) const
-{
-}
-
 void Zork::Creature::Put(const std::vector<std::string>& arguments)
 {
 }
@@ -233,26 +229,6 @@ void Zork::Creature::Attack()
 
 void Zork::Creature::EnterCombat(const std::vector<std::string>& arguments)
 {
-	//std::string targetName = arguments[1];
-
-	//Entity* target = (Entity*)(this->GetParent()->FindInChildren(targetName));
-
-	//if (!target->IsCreature())
-	//{
-	//	return;
-	//}
-
-	//combatTarget = (Creature*)target;
-
-	//if (!combatTarget->IsAlive())
-	//{
-	//	std::cout << combatTarget->name << " is already dead." << std::endl;
-	//	return;
-	//}
-
-	//std::cout << name << " " << attackDescription << " " << combatTarget->name << std::endl;
-
-	//combatTarget->TakeDamage(GetAttackAmount(), natureType);
 }
 
 void Zork::Creature::PrintInventory() const
