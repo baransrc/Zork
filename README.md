@@ -1,6 +1,6 @@
 # Zork
-License: https://github.com/baransrc/Zork/blob/main/LICENSE
-Repository: https://github.com/baransrc/Zork
+License: https://github.com/baransrc/Zork/blob/main/LICENSE <br />
+Repository: https://github.com/baransrc/Zork <br />
 
 ## About Game
 In this version of Zork you play a mage lost in a dungeon.<br />
