@@ -24,7 +24,7 @@ Zork::World::World()
 	Room* earthRoom = new Room("Ancient Artifacts", "It is a room full of earthen artifacts that holds ancient technology.");
 	Room* corridor = new Room("Passage", "It is a really long passage full of unsettling aesthetics.");
 	Room* hallway = new Room("Hallway", "Smell is really bad here. On the ground lies countless rotten sea food.");
-	Room* library = new Room("Abandoned Library", "It is full of empty book shelves from the ground to the endless ceiling. In the middle of the room, there are hovering objects on a earthen pedestal.");
+	Room* library = new Room("Empty Library", "It is full of empty book shelves from the ground to the endless ceiling. In the middle of the room, there are hovering objects on a earthen pedestal.");
 
 	entities.push_back(obeliskRoom);
 	entities.push_back(fireRoom);
