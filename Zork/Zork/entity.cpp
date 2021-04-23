@@ -39,6 +39,7 @@ void Zork::Entity::SetParent(Entity * newParent)
 
 		if (newParent->FindInChildren(this) == NULL)
 		{
+			parent->AddChild(this);
 			return;
 		}
     }

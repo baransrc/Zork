@@ -280,6 +280,8 @@ Zork::World::World()
 	// --- Non Player Characters ---
 	Stats fireStats = { 10,4,3 };
 	Stats earthStats = { 12,2,3 };
+	Stats waterStats = { 9, 3, 5 };
+	Stats airStats = { 0, 5, 2 };
 	Npc* fireCreature = new Npc(
 		"Od",
 		"It is a burning boar with molten iron legs looking like hammer.",
@@ -298,15 +300,25 @@ Zork::World::World()
 		NatureType::EARTH,
 		false
 	);
+	Npc* airCreature = new Npc(
+		"Vha",
+		"A decayed skeleton of a monk.",
+		"Created a heavy breeze from gray mana and channeled it to",
+		airRoom,
+		airStats,
+		NatureType::AIR,
+		false
+	);
+	Npc* waterCreature = new Npc(
+		"Syon",
+		"An ugly and smelly slime that looks like a fish headed horse.",
+		"Dissolved into the dirty water, turned into a sword and launched itself to",
+		waterRoom,
+		waterStats,
+		NatureType::WATER,
+		false
+	);
 
-	//Creature* fireCreature = new Creature(
-	//	"Hot Eye",
-	//	"A frightening creature that looks like a burning eye.",
-	//	"Created a spiral of fire charged with red mana and throwed it to",
-	//	obeliskRoom,
-	//	monsterStats,
-	//	NatureType::FIRE
-	//);
 
 	entities.push_back(earthCreature);
 	entities.push_back(fireCreature);
@@ -331,6 +343,14 @@ Zork::World::World()
 		zeroStats,
 		NatureType::NONE
 	);
+	Item* trunk = new Item(
+		"Trunk",
+		"A slightly damaged wooden trunk.",
+		airRoom,
+		ItemType::CONTAINER,
+		zeroStats,
+		NatureType::NONE
+	);
 	Item* armor = new Item(
 		"Robe",
 		"A blue robe made of dragon hair.",
@@ -342,7 +362,7 @@ Zork::World::World()
 	Item* fireRune = new Item(
 		"Faerl",
 		"A cross shaped, red colored rune stone.",
-		obeliskRoom,
+		fireCreature,
 		ItemType::RUNE,
 		zeroStats,
 		NatureType::FIRE
@@ -350,7 +370,7 @@ Zork::World::World()
 	Item* waterRune = new Item(
 		"Elemyr",
 		"A circle shaped, blue colored rune stone.",
-		obeliskRoom,
+		waterCreature,
 		ItemType::RUNE,
 		zeroStats,
 		NatureType::WATER
@@ -358,7 +378,7 @@ Zork::World::World()
 	Item* airRune = new Item(
 		"Sendulai",
 		"A triangle shaped, gray colored rune stone.",
-		obeliskRoom,
+		trunk,
 		ItemType::RUNE,
 		zeroStats,
 		NatureType::AIR
@@ -375,6 +395,7 @@ Zork::World::World()
 
 	entities.push_back(staff);
 	entities.push_back(chest);
+	entities.push_back(trunk);
 	entities.push_back(armor);
 	entities.push_back(fireRune);
 	entities.push_back(waterRune);
