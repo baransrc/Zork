@@ -31,8 +31,17 @@ void Zork::Room::Look() const
 			}
 			else
 			{
-				std::cout << "Something alive named " << (*iterator)->name << " wanders around. It may be dangerous." << std::endl;
+				std::cout << "A creature named " << (*iterator)->name << " wanders around. It may be dangerous." << std::endl;
 			}
+		}
+	}
+
+	// Obelisks:
+	for (std::list<Entity*>::const_iterator iterator = childrenReference.begin(); iterator != childrenReference.cend(); ++iterator)
+	{
+		if ((*iterator)->GetType() == EntityType::OBELISK)
+		{
+			std::cout << "There is a " << (*iterator)->name << ". " << (*iterator)->description << std::endl;
 		}
 	}
 
@@ -63,6 +72,7 @@ void Zork::Room::Look() const
                   << "\"" << exit->name  << "\". " << exit->description << std::endl; 
 		}
 	}
+
 }
 
 
