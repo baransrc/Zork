@@ -165,6 +165,10 @@ void Zork::Obelisk::Update()
 	if (AllCavitiesFilled())
 	{
 		exit->locked = false;
+
+		std::cout << std::endl << "A new door is unlocked at the "
+			<< DirectionToString(exit->GetDirection())
+			<< " of the room." << std::endl;
 		
 		return;
 	}

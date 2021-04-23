@@ -566,11 +566,18 @@ void Zork::Player::EnterCombat(const std::vector<std::string>& arguments)
 	{
 		Entity* target = GetRoom()->FindInChildren(arguments[3]);
 
-		if (target == NULL || !target->IsCreature() || target == this)
+		if (target == NULL)
+		{
+			std::cout << std::endl << name << ": I don't know who to attack."
+					  << std::endl;
+
+			return;
+		}
+		if (!target->IsCreature() || target == this)
 		{
 			std::cout << std::endl << name
-					 << ": " << target->name << " is not a valid target."
-					 << std::endl;
+				<< ": " << target->name << " is not a valid target."
+				<< std::endl;
 
 			return;
 		}
@@ -725,10 +732,10 @@ void Zork::Player::Attack()
 
 void Zork::Player::Stun()
 {
-	combatTarget->GetStunned(natureType);
-
 	std::cout << std::endl << name << " " << stunDescription << " " << NatureTypeToString(natureType)
-		      << " and trapped " << combatTarget->name << " inside it." << std::endl;
+		<< " and trapped " << combatTarget->name << " inside it." << std::endl;
+	
+	combatTarget->GetStunned(natureType);
 }
 
 void Zork::Player::Prayer()
