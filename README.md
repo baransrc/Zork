@@ -119,4 +119,4 @@ One can follow the following path to win the game:<br />
 - go east
 
 # Development Notes
-Developing this project was more of a time challenge for me. Since it has been more than a year since I used C++ in a object oriented way, codebase may not be in it's best state possible. Aside from technical related stuff, developing a text adventure game turned out to be a lot more fun then I imagined, as it challenges your imagination to illustrate the game with words.
+Developing this project was more of a time challenge for me. Since it has been more than a year since I used C++ in a object oriented way, codebase may not be in it's best state possible. Aside from technical related stuff, developing a text adventure game turned out to be a lot more fun than I imagined, as it challenges your imagination to illustrate the game with words.
